@@ -260,27 +260,33 @@ def get_video_feature(
     return feature
 
 if __name__ == "__main__":
-    VIDEO_PATH_SRF = '/net/cephfs/shares/easier.volk.cl.uzh/WMT_Shared_Task/srf/parallel/videos_256/'
-    FEATURE_PATH_SRF = '/net/cephfs/shares/easier.volk.cl.uzh/WMT_Shared_Task/srf/parallel/videos_i3d/'
-    CSV_URL = '/net/cephfs/shares/easier.volk.cl.uzh/WMT_Shared_Task/processing-shared-task-data-zifan/alignment_offset/SRF_segmented_Surrey.csv'
+    # VIDEO_PATH_SRF = '/net/cephfs/shares/easier.volk.cl.uzh/WMT_Shared_Task/srf/parallel/videos_256/'
+    # FEATURE_PATH_SRF = '/net/cephfs/shares/easier.volk.cl.uzh/WMT_Shared_Task/srf/parallel/videos_i3d/'
+    # CSV_URL = '/net/cephfs/shares/easier.volk.cl.uzh/WMT_Shared_Task/processing-shared-task-data-zifan/alignment_offset/SRF_segmented_Surrey.csv'
 
-    Path(FEATURE_PATH_SRF).mkdir(exist_ok=True, parents=True)
+    # Path(FEATURE_PATH_SRF).mkdir(exist_ok=True, parents=True)
 
-    data = pd.read_csv(CSV_URL)
+    # data = pd.read_csv(CSV_URL)
 
-    data = data.dropna()
-    gb = data.groupby('filename')
-    data_by_video = [gb.get_group(x) for x in gb.groups]
+    # data = data.dropna()
+    # gb = data.groupby('filename')
+    # data_by_video = [gb.get_group(x) for x in gb.groups]
 
-    video_embeddings = []
+    # video_embeddings = []
 
-    for data_current in data_by_video:
+    # for data_current in data_by_video:
 
-        filename = data_current['filename'].iloc[0]
-        video_path = (VIDEO_PATH_SRF + filename).replace('.srt', '.mp4')
-        feature_path = (FEATURE_PATH_SRF + filename).replace('.srt', '.npy')
+    #     filename = data_current['filename'].iloc[0]
+    #     video_path = (VIDEO_PATH_SRF + filename).replace('.srt', '.mp4')
+    #     feature_path = (FEATURE_PATH_SRF + filename).replace('.srt', '.npy')
 
-        feature = get_video_feature(video_path)
-        # feature = get_video_feature()
-        np.save(feature_path, feature)
-        print('save ' + feature_path)
+    #     feature = get_video_feature(video_path)
+    #     # feature = get_video_feature()
+    #     np.save(feature_path, feature)
+    #     print('save ' + feature_path)
+    
+    video_path = sys.argv[1]
+    feature_path = sys.argv[2]
+
+    feature = get_video_feature(video_path)
+    np.save(feature_path, feature)
